@@ -50,23 +50,9 @@ We can see that it is somehow exponentially distributed, as was expected. If we 
 - are on a **power play** lineup
 - etc.
 
-Let's now have a look at what variables correlate the most with the number of goals scored. We assume there will be some obvious ones, such as **number of powerplay goals**, but others that might not be so obvious. For this, we will take into account only the numerical variables. For now, this means omitting **player name**, **player team** and **position**. To also not show all variables, we will show only the ones where the correlation coefficient is **above 0.5** in the absolute value.
+Let's now have a look at what variables correlate the most with the number of goals scored. We assume there will be some obvious ones, such as **number of powerplay goals**, but others that might not be so obvious. For this, we will take into account only the numerical variables. For now, this means omitting **player name**, **player team** and **position**. To also not show all variables, we will show only the ones where the correlation coefficient is **above 0.5**, either positive or negative.
 
-|variable       | \|r\| |
-| ------------- | ---------------------------------------- |
-|goals |	1.000000 |
-|num_goals_5on5 |	0.962850 |
-|points |	0.918341 |
-|shoots_on_goal |	0.884312 |
-|num_goals_powerplay |	0.846224 |
-|num_goals_gamewinning |	0.825309 |
-|team_points_ratio |	0.796160 |
-|assists |	0.779527 |
-|num_assists_5on5 |	0.766360 |
-|num_assists_powerplay |	0.644243
-|games_played |	0.627930
-|time_on_ice |	0.627914
-
+![goals-pearson-r](./assets/goals-pearson-r.png)
 Here we see that there are is some expected correlation with other statistics, such as total number of points or number of 5-on-5 goals. However, there are some not so apparent ones from which we can make some assumptions:
 - the more time on ice a player is given, the more likely he is to score a goal
 - the more games a player plays, the more likely he is to score a goal
