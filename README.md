@@ -2,4 +2,4 @@
 
 ## Checkpoint number 1
 
-The file containing interim report for the first checkpoint can be found [here](./findings.md).
+The file containing interim report for the first checkpoint can be found [here](./interim-report.md).

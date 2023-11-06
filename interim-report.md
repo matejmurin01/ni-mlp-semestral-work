@@ -2,6 +2,10 @@
 - student: `Matej Murín (username: murinmat)`
 - chosen dataset: `NHL player statistics`
 
+It will follow the CRISP-DM methodology, so the individual steps can be partitioned as such.
+
+[!crisp-dm-visualized](./assets/crisp-dm.png)
+
 První verze (částečná, nejpozději 13. 11.): formulace řešeného problému, exploratorní analýza dat potřebných k jeho řešení, porozumění datům, průběžný závěr z explorací
 
 ## 1. Problem formulation
