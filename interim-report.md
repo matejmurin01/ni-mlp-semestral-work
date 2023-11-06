@@ -7,7 +7,7 @@ TABLE OF CONTENTS:
   - [1. Business understanding](#1-business-understanding)
   - [2. Exploratory analysis](#2-exploratory-analysis)
     - [2.1 The ``goals`` variable](#21-the-goals-variable)
-    - [2.2 Player being **traded** in the next season](#22-player-being-traded-in-the-next-season)
+    - [2.2 Player being ``traded`` in the next season](#22-player-being-traded-in-the-next-season)
   - [3. Interim data analysis conclusions](#3-interim-data-analysis-conclusions)
 
 ---
@@ -67,7 +67,7 @@ Here we see that there are is some expected correlation with other statistics, s
 
 We can therefore assume that when modeling the prediction for the number of goals in the next season, we these other variables, or features, will be the most helpful.
 
-### 2.2 Player being **traded** in the next season
+### 2.2 Player being ``traded`` in the next season
 
 Let's now observe what players had been traded in the following season. Since there is no such variable in the dataset, we have to create it. Luckily it's very simple. We will just have a look at what team a player is in the given season, if he has a record in the dataset in the next season, and if the teams are the same or not.
 
