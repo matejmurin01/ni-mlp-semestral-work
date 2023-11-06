@@ -1,12 +1,19 @@
-# NI-MLP semestral work
+# NI-MLP semestral work report
 - student: `Matej Murín (username: murinmat)`
 - chosen dataset: `NHL player statistics`
+---
+TABLE OF CONTENTS:
+- [NI-MLP semestral work report](#ni-mlp-semestral-work-report)
+  - [1. Business understanding](#1-business-understanding)
+  - [2. Exploratory analysis](#2-exploratory-analysis)
+    - [2.1 The ``goals`` variable](#21-the-goals-variable)
+    - [2.2 Player being **traded** in the next season](#22-player-being-traded-in-the-next-season)
+  - [3. Interim data analysis conclusions](#3-interim-data-analysis-conclusions)
 
-It will follow the CRISP-DM methodology, so the individual steps can be partitioned as such.
+---
+This work will follow the CRISP-DM methodology, so the individual steps had been partitioned as such.
 
 <img src="./assets/crisp-dm.png" width="300">
-
-První verze (částečná, nejpozději 13. 11.): formulace řešeného problému, exploratorní analýza dat potřebných k jeho řešení, porozumění datům, průběžný závěr z explorací
 
 ## 1. Business understanding
 
@@ -28,10 +35,10 @@ The data itself is in a `csv` format consisting of various variables such as:
 For the purpose of this work, we will focus on the following variables as the ones we are trying to describe and later on predict, in one way or another:
 - number of **goals scored** in the next season
     - this is the most interesting variable for arguably the most people
-- the **face-off** win ratio in the next season
-    - this attribute is particularly important in crucial situations during a game
 - the probability of a player being **traded** in the next season
     - this could be interesting to fans and management alike, knowing what players are likely to be open for trades or not
+- the **face-off** win ratio in the next season
+    - this attribute is particularly important in crucial situations during a game
 - number of **Hart Trophy** votes in the next season
     - this might help determining how valuable a player will be in the next season
 
@@ -57,6 +64,22 @@ Here we see that there are is some expected correlation with other statistics, s
 - the more time on ice a player is given, the more likely he is to score a goal
 - the more games a player plays, the more likely he is to score a goal
 - a player who scores a lot is also likely to have more assists
+
+We can therefore assume that when modeling the prediction for the number of goals in the next season, we these other variables, or features, will be the most helpful.
+
+### 2.2 Player being **traded** in the next season
+
+Let's now observe what players had been traded in the following season. Since there is no such variable in the dataset, we have to create it. Luckily it's very simple. We will just have a look at what team a player is in the given season, if he has a record in the dataset in the next season, and if the teams are the same or not.
+
+![trade-probability](./assets/traded-prob.png)
+
+From the above distribution, we can see that there is roughly a **30%** chance that a *randomly picked* player will be traded in the next season. Let's now observe if there are any indications that they will be traded. For this, we will use a simple **logistic regression** model and have a look at the coefficients. This is because for a player being traded, we can assume that it more complex than just scoring goals, and it can be a combination of multiple factors deciding whether they will be traded or not. We will only take into account the data points where we know if the player had been traded in the next season or not, omiting the data where it is unknown. This leaves us with roughly **70%** of the data, a little over **8500** records. 
+
+![logistic-regression-traded](./assets/traded-logistic-regression.png)
+
+Unfortunately, we are not able to make many conclusions form this. The ones we can assume are:
+- a player who plays on **penalty kill** units, and even is able to score on them, is less likely to be traded
+- the older the player, the more likely they are to be traded
 
 ## 3. Interim data analysis conclusions
 Some text
