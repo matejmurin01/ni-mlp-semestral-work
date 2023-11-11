@@ -16,6 +16,8 @@ This work will follow the CRISP-DM methodology, so the individual steps had been
 
 <img src="./assets/crisp-dm.png" width="300">
 
+[Source: Wikipedia](https://en.wikipedia.org/wiki/Cross-industry_standard_process_for_data_mining)
+
 ## 1. Business understanding
 
 As per the oficial [description](https://courses.fit.cvut.cz/NI-MLP/files/datasets-assignments-instructions.pdf), this semestral work concerns itself with data containing:
