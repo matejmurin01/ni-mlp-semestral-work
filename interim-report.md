@@ -1,6 +1,6 @@
 # NI-MLP semestral work report
 - student: `Matej Murín (username: murinmat)`
-- chosen dataset: `NHL player statistics`
+- chosen dataset: [NHL player statistics](https://courses.fit.cvut.cz/NI-MLP/files/nhl-player-data.zip)
 ---
 TABLE OF CONTENTS:
 - [NI-MLP semestral work report](#ni-mlp-semestral-work-report)
