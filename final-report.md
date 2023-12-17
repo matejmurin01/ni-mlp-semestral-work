@@ -220,7 +220,7 @@ The last predictor we will have a closer look at is the **number of shorthanded 
 
 If we look at the distribution of the **position** variable, we might find that there are some players who have had played mroe than just one position within a season.
 
-![dist-pos](assets/hist-position.png)
+<img src="./assets/hist-position.png" alt="hist-pos" width="300"/>
 
 It is interresting to see that there are some who have position as **LW/RW**, and some who just **W**, since these should technically be the same thing. We will need to fix this when using the data in a model.
 ## 4. Interim data analysis conclusions
