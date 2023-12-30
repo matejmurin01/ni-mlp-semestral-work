@@ -310,7 +310,7 @@ Now that the data is ready for modeling, we need to choose a model that will hel
 
 ![dec-tree-gini-entropy](./assets/dec-tree-gini-entropy.png)
 
-We see that if we use ``max depth = 3``, we get almost as goot F1 score as if we used ``max depth = 4`` and we also minimize the gap between train and test values. A lower max depth is also more explainable, so we will opt for this value. Now we can visualize the decision tree fitted to all the data and see if there is any knowledge that we can extract from it. 
+We see that if we use ``max depth = 3``, we get almost as good F1 score as if we used ``max depth = 4`` and we also minimize the gap between train and test values. A lower max depth is also more explainable, so we will opt for this value. Now we can visualize the decision tree fitted to all the data and see if there is any knowledge that we can extract from it. 
 
 ![tree-viz](./assets/tree-viz.png)
 
@@ -328,4 +328,7 @@ If we normalize it, we obtain the following:
 | $y$ = Not traded |	0.63	| 0.37 |
 | $y$ = Traded | 0.33 | 0.67 |
 
-We see that the accuracy for both *traded* and *not traded* ends up being around 66%, meaning a simple model like this gets the answer correct in **2** out of **3** players.
+We see that the accuracy for both *traded* and *not traded* ends up being around 66%, meaning a simple model like this gets the answer correct in **2** out of **3** players, regardless of the value of target variable.
+
+### 5.3 Number of ``Hart Trophy votes`` in the next season
+
