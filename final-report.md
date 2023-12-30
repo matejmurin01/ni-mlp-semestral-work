@@ -14,10 +14,11 @@ TABLE OF CONTENTS:
     - [3.2 Player being ``traded`` in the next season](#32-player-being-traded-in-the-next-season)
     - [3.3 Number of ``Hart Trophy`` votes in the next season](#33-number-of-hart-trophy-votes-in-the-next-season)
     - [3.4 Predictor variables](#34-predictor-variables)
-  - [4. Interim data analysis conclusions](#4-interim-data-analysis-conclusions)
-  - [5. Data preparation and modelling](#5-data-preparation-and-modelling)
-    - [5.1 Number of ``goals`` in the next season](#51-number-of-goals-in-the-next-season)
-    - [5.2 The probability of a player being ``traded`` in the next season](#52-the-probability-of-a-player-being-traded-in-the-next-season)
+  - [4. Data preparation and modelling](#4-data-preparation-and-modelling)
+    - [4.1 Number of ``goals`` in the next season](#41-number-of-goals-in-the-next-season)
+    - [4.2 The probability of a player being ``traded`` in the next season](#42-the-probability-of-a-player-being-traded-in-the-next-season)
+    - [4.3 Number of ``Hart Trophy votes`` in the next season](#43-number-of-hart-trophy-votes-in-the-next-season)
+  - [5. Conclusions](#5-conclusions)
 
 ---
 This work will follow the CRISP-DM methodology, so the individual steps had been partitioned as such.
@@ -226,23 +227,8 @@ If we look at the distribution of the **position** variable, we might find that 
 <img src="./assets/hist-position.png" alt="hist-pos" width="300"/>
 
 It is interresting to see that there are some who have position as **LW/RW**, and some who just **W**, since these should technically be the same thing. We will need to fix this when using the data in a model.
-## 4. Interim data analysis conclusions
 
-Let's summarize what had been done so far. In [Part 1: the Business Understanding](#1-business-understanding), we had introduced the dataset. We had not described every single column in the `csv` file containing the data, as that would be unnecessary and anyone interested can do so themselves. Furthermore, we had defined the main goals of this work. That is, understand the *crucial* variables that we are interested in and described what they mean and why they are interresting. Let's mention them once again, as a refresher. Those variables are:
-  
-- number of **goals scored** in the next season
-- probability of a player **being traded** in the next season
-- number of *votes* for the [**Hart Trophy**](https://en.wikipedia.org/wiki/Hart_Memorial_Trophy) received in the next season
-
-Consequently in [part 2](#2-data-undestranding--exploratory-analysis), we had performed some initial exploratory analysis of the data in the dataset related to those variables. Let's again recap what we had found out about those variables.
-
-For the [**goals**](#21-the-goals-variable) variable, we found out that it has some sort of exponential distribution among players, where a minority of the player base scores the most goals. We had also explored the correlation between number of goals scored and other variables. Some of the more interresting finds were that it pretty strongly correlates with ``time on ice`` and ``games played``, which, if we think about it, makes sense. To increase chances to score, more ice time deffinitely helps. On the other hands, if you score a lot of goals, chances are you will be provided with more ice time compared to other players.
-
-For the [**traded in next season**](#22-player-being-traded-in-the-next-season) variable, we first had a look at the proportion of players being traded. We saw that there is roughly a ``30%`` chance that a randomly picked player in a random season will be traded. Furthermore, we had aggregated the chance of being traded with the season a player ended up traded in. We had observed a somewhat downward trend, with less players being trade in the recent seasons compared to the older ones. We had then done a logistic regression on other variables to see any pointers to a player being traded in the next season based on current season statistics. For this, we saw that increasing **age** points the most towards a chance of being traded. Conversely, the number of **shorthanded goals** as well as **shorthanded assists** seems to decrease the chance of a player being traded.
-
-Lastly, for the [**number of Hart Trophy votes**](#23-number-of-hart-trophy-votes-in-the-next-season) in the next season, we first observed the distribution of votes among seasons. Here we saw something interesting, but something that also makes sense when thought about. A very small minority of players ends up receiving the vast majority of votes. This seems to indicate that there are a few players each season that stand out and end up getting voted for in the end. As in terms of correlation with other variables, the mostly correlated ones were the **nubmer of votes** in previous season, as well as number of **points** acquired. By proxy, this also means number of **goals** and number of **assists**. Interestingly, if a player ends up being **traded** in the next season, they are likely to receive fewer amount of votes. This seems to point towards a theory that the players that end up being traded receive less votes, meaning they are probably the players that teams are not happy with, which could mean that they don't perform as is expected of them.
-
-## 5. Data preparation and modelling
+## 4. Data preparation and modelling
 
 This section describes the data transformations and simple modeling phase, where we try to get insight into the **business variables** we defined in [section 1](#1-business-understanding) and try to understand the factors that could help us predicting them the most.
 
@@ -252,7 +238,7 @@ Next, we will one-hot encode the position variable. In case a player has more th
 
 Furthermore, we will use **5-fold cross validation** to measure the model's performance on unseen data when searching for the best hyperparameters of a model.
 
-### 5.1 Number of ``goals`` in the next season
+### 4.1 Number of ``goals`` in the next season
 
 For finding predictor variables that help us understand the most what determines the number of goals of a player in the next season, we will use the **Lasso** model. The reason for picking a linear model is that it is nicely explainable, since the magnitude of the coefficients found per predictor variable directly determines it's importance. Even though linear regression has this property as well, we chose Lasso instead, since it naturally attempts to push as many coefficients as close to 0 as possible. The hyperparameter that we will search for is the $\alpha$ used for regularization. Other parameters will be set as:
 
@@ -286,8 +272,7 @@ We can see that being a forward has the highest impact on the number of goals th
 
 ![mean-goals-season](./assets/mean-goals-per-season.png)
 
-
-### 5.2 The probability of a player being ``traded`` in the next season
+### 4.2 The probability of a player being ``traded`` in the next season
 
 Let's now attempt to have a better understanding of what leads to a player being traded in the next season. For this, we will use only the records where we do know if a player ended up being traded or not. Furthermore, we will drop the following features in the modeling:
 
@@ -330,5 +315,52 @@ If we normalize it, we obtain the following:
 
 We see that the accuracy for both *traded* and *not traded* ends up being around 66%, meaning a simple model like this gets the answer correct in **2** out of **3** players, regardless of the value of target variable.
 
-### 5.3 Number of ``Hart Trophy votes`` in the next season
+### 4.3 Number of ``Hart Trophy votes`` in the next season
 
+Now let's try to model *Number of Hart Trophy votes in the next season*. We will expect this variable to be rather hard to predict, especially with a simple model. Reason being is that very few players receive almost all of the votes awarded, so the majority of players simply receive no votes. Because of this, a linear model such as linear regression is probably not the best, although there might be some combination of predictor variables where the target variable does behave linear. However, let's not assume so. Because of this, we will use decision tree regressor as a model of choice. For regularization, we will explore the **minimun samples in leaf** as a hyperparameter and again perform 5-fold cross validation for model selection, where we look at the **squared loss**. 
+
+Let's again start by dropping some predictor variables we don't want to use. Those will be:
+```
+player, nick, position, team, rank
+```
+
+We again fill the missing values for **shoot success rate** and **faceoff success rate** with 0's, as we did last time. We also normalize the target variable so that it sums up to **100** per season, meaning we transform it from raw number of votes to the *percentage* of the number of votes.
+
+Now if we fit the model, we obtain the following **RMSE** values.
+
+![ht-votes-rmse](./assets/HT_votes_rmse.png)
+
+We can see that the model that performs the same for both **train** and **test** set reasonably well is if we use **max depth = 4** and **min leaf size = 5**. We can now visualize the fitted tree:
+
+![ht-votes-tree](./assets/HT_votes_tree.png)
+
+There isn't much information to be extracted. Sadly, that is because the data itself is outlier-ish by nature. After all, this trophy is awarded to players that stand out during a season. However, we can at least see some pattern:
+
+- players receiving some votes are more likely to receive votes in the next season as well
+- highly-voted players seem to shoot a lot
+- players who acquire a lot of points (more than 74) usually get at least some votes.
+
+## 5. Conclusions
+
+Let's summarize everything important we had done and fond out. In [the first part](#1-business-understanding), we had introduced the dataset. We had not described every single column in the `csv` file containing the data, as that would be unnecessary and anyone interested can do so themselves. Furthermore, we had defined the main goals of this work. That is, understand the *crucial* variables that we are interested in and described what they mean and why they are interresting. Let's mention them once again, as a refresher. Those variables are:
+  
+- number of **goals scored** in the next season
+- probability of a player **being traded** in the next season
+- number of *votes* for the [**Hart Trophy**](https://en.wikipedia.org/wiki/Hart_Memorial_Trophy) received in the next season
+
+In [part 2](#2-data-quality-checking), we had performed data quality checking where we fixed some missing values, as well as adding missing values where they weren't but should've been. We also fixed or removed records with corrupt data.
+
+Consequently in [part 3](#3-data-undestranding--exploratory-analysis), we had performed some initial exploratory analysis of the data in the dataset related to those variables. Let's recap what the initial analysis said about those variables.
+
+For the [**goals**](#21-the-goals-variable) variable, we found out that it has some sort of exponential distribution among players, where a minority of the player base scores the most goals. We had also explored the correlation between number of goals scored and other variables. Some of the more interresting finds were that it pretty strongly correlates with ``time on ice`` and ``games played``, which, if we think about it, makes sense. To increase chances to score, more ice time deffinitely helps. On the other hands, if you score a lot of goals, chances are you will be provided with more ice time compared to other players.
+
+For the [**traded in next season**](#22-player-being-traded-in-the-next-season) variable, we first had a look at the proportion of players being traded. We saw that there is roughly a ``30%`` chance that a randomly picked player in a random season will be traded. Furthermore, we had aggregated the chance of being traded with the season a player ended up traded in. We had observed a somewhat downward trend, with less players being trade in the recent seasons compared to the older ones. We had then done a logistic regression on other variables to see any pointers to a player being traded in the next season based on current season statistics. For this, we saw that increasing **age** points the most towards a chance of being traded. Conversely, the number of **shorthanded goals** as well as **shorthanded assists** seems to decrease the chance of a player being traded.
+
+Finally in the [**last part**](#4-data-preparation-and-modelling), we did some simple modeling of those variables of interest in hopes of acquiring more knowledge about them.
+
+For [**predicting the number of goals in the next season**](#41-number-of-goals-in-the-next-season), we fitted a *Lasso* model and had a look at the coefficients of the variables to assess their importance. We found out that even with 9 variables out of 31 total, we were able to achieve a decent performance. What the analysis of the coefficients showed is that the most impactful predictor variable is whether a player is a forward or not. Higher ice-time seem to also indicate more goals.
+
+For [**predicting whether a player will be traded in the next season**](#42-the-probability-of-a-player-being-traded-in-the-next-season), we fitted a decision tree classifier and limited it's maximum depth to keep the model simple and explainable. With max depth set to **3**, we acquired a model that correctly classifies 66% of the time for both cases, traded and not-traded. When we visualized the tree, we saw that older players are much more likely to be traded, especially if they still have low ice-time. This has showed to be the strongest indicator to a player likely being traded.
+
+
+Lastly, [**predicting the number of Hart Trophy votes in the next season**](#43-number-of-hart-trophy-votes-in-the-next-season) has proven to be the most difficult. We opted for a decision tree regressor which we regularized by increasing the minimum number of samples within a leaf. We were not able to make many conclusions. However, there is some indication that high ice-time and a lot of points seem to correlate with receiving more votes in the next season.
